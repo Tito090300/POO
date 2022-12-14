@@ -1,60 +1,74 @@
 package poo;
+
 import java.util.*;
+import javax.swing.*;
 
 public class Uso_Empleado {
-
-	public static void main(String args[]) {
+	
+	public static void main(String[] args) { 
+	
 		
-		Empleado misEmpleados[] = new Empleado[3];
-		misEmpleados[0] = new Empleado("Juan Martínez", 85000, 1995, 10, 07);
-		misEmpleados[1] = new Empleado("Andrea Valentina", 95000, 1998, 04, 26);
-		misEmpleados[2] = new Empleado("Andrés Gonzáles", 105000, 2002, 01, 07);
+		Empleado[] misEmpleados = new Empleado[5];
+		misEmpleados[0] = new Empleado("Luis Mesas", 85000, 2020, 10, 7);
+		misEmpleados[1] = new Empleado("Ariana Fernandez", 87545, 2018, 4, 30);
+		misEmpleados[2] = new Empleado("Javier Urdaneta", 92330, 2019, 6, 23);
+		misEmpleados[3] = new Empleado("Adrián José");
 		
-		for(empleado empl : misEmpleados) {
-			System.out.println("El nombre es: " + empl.dameNombre() + ", su salario "
-			+ "es de: " + empl.dameSalario() + ", y su fecha de alta es: "
-			+ empl.dameFechaAlta() + ".");
+		System.out.println(misEmpleados[3].dameNombre() + " tiene un bonus de: " + 
+		misEmpleados[3].establece_bonus(500));
+		
+		for(Empleado empl : misEmpleados) {
 			
-			empl.subirSalario(5);
-			
+			System.out.println(empl.dimeDatosEmpleado());
+			empl.aumentarSalario(5);
 			System.out.println("El nuevo salario de " + empl.dameNombre() + 
-			" es de: " + empl.dameSalario());
+			" es de: " + empl.dimeSalario());
 		}
 		
 	}
-	
-	
+
 }
 
 class Empleado{
 	
-	private double salario;
 	private String nombre;
+	private double salario;
 	private Date fecha_alta;
+	private int id;
+	static int idSiguiente = 0;
 	
-	public Empleado(String nom, double sala, int agno, int mes, int dia){
+	public Empleado(String _nombre, double _salario, int _anio, int _mes, int _dia) {
+		nombre = _nombre;
 		
-		nombre = nom;
-		salario = sala;
-		GregorianCalendar calendario = new GregorianCalendar(agno, mes-1, dia);
+		salario = _salario;
+		GregorianCalendar calendario = new GregorianCalendar(_anio, _mes-1, _dia);
 		fecha_alta = calendario.getTime();
+		++idSiguiente;
+		id = idSiguiente;
 		
 	}
-	
-	public double dameSalario() {
-		return salario;
+	public Empleado(String _nombre){
+		this(_nombre, 30000, 2000, 01, 01);
 	}
 	public String dameNombre() {
-		return nombre;
+		return "Nombre: " + this.nombre + ", id: "+ this.id;
 	}
-	public Date dameFechaAlta() {
-		return fecha_alta;
+	public double dimeSalario() {
+		return this.salario;
 	}
-	public void subirSalario(double porcentaje) {
-		double aumento = salario*porcentaje / 100;
-		salario += aumento;
+	public Date dimeFechaContrato() {
+		return this.fecha_alta;
 	}
-	
-	
-	
+	public void definirNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public void aumentarSalario(double porcentaje) {
+		this.salario += (salario*porcentaje) / 100; 
+	}
+	public String dimeDatosEmpleado() {
+		return
+		"El nombre del empleado es: " + this.dameNombre() + ", y su fecha de "
+		+ "alta fue " + this.dimeFechaContrato() + ", y el salario es de " 
+		+ this.dimeSalario() + "$";
+	}
 }
